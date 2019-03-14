@@ -9,9 +9,11 @@ class Juego {
         this.inicializar();
         this.generarSecuencia();
         this.siguienteNivel();
+        this.agregarEventosClick();
     }
 
     inicializar() {
+        this.elegirColor = this.elegirColor.bind(this);
         btnEmpezar.classList.add('hide');
         this.nivel = 1;
         this.colores = {
@@ -20,6 +22,13 @@ class Juego {
             naranja,
             verde
         }
+    }
+
+    agregarEventosClick() {
+        // Obtenemos los indices del objeto this.colores y le asignamos el evento
+        Object.keys(this.colores).map((color) => {
+            this.colores[color].addEventListener('click', this.elegirColor);
+        });
     }
 
     generarSecuencia() {
@@ -60,6 +69,10 @@ class Juego {
                 this.iluminarColor(color) 
             }, 1000 * i);;
         }
+    }
+
+    elegirColor(ev) {
+        console.log(this);
     }
 }
 

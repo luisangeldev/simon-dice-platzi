@@ -8,16 +8,26 @@ const startEffect = document.getElementById('start-effect');
 const pointerEffect = document.getElementById('pointer-effect');
 const loseEffect = document.getElementById('lose-effect');
 const winEffect = document.getElementById('win-effect');
-const ULTIMO_NIVEL = 2;
 
 class Juego {
     constructor() {
-        this.inicializar();
-        this.generarSecuencia();
-        setTimeout(() => this.siguienteNivel(), 500);
+        this.preguntaUltimoNivel();
     }
 
-    inicializar() {
+    async preguntaUltimoNivel() {
+        await swal("¿Cuántos niveles quieres jugar?", {
+                content: "input",
+            })
+            .then((value) => {
+                let ultimoNivel = parseInt(value);
+                this.inicializar(ultimoNivel);
+            });
+    }
+
+    inicializar(ultimoNivel) {
+        this.ultimo_nivel = ultimoNivel;
+        this.generarSecuencia();
+        setTimeout(() => this.siguienteNivel(), 500);
         startEffect.play();
         this.elegirColor = this.elegirColor.bind(this);
         this.siguienteNivel = this.siguienteNivel.bind(this);
@@ -55,7 +65,7 @@ class Juego {
     }
 
     generarSecuencia() {
-        this.secuencia = new Array(ULTIMO_NIVEL).fill(0).map(n => Math.floor(Math.random() * 4));
+        this.secuencia = new Array(this.ultimo_nivel).fill(0).map(n => Math.floor(Math.random() * 4));
     }
 
     siguienteNivel() {
@@ -110,8 +120,13 @@ class Juego {
         }
     }
 
-    ganoElJuego() {
+    stopMusic() {
+        gameMusic.currentTime = 0;
         gameMusic.pause();
+    }
+
+    ganoElJuego() {
+        this.stopMusic();
         swal('Platzi', 'Felicitaciones ¡Ganaste!','success')
         .then((event) => {
             this.restart();
@@ -119,6 +134,8 @@ class Juego {
     }
 
     perdioElJuego() {
+        this.stopMusic();
+        loseEffect.play();
         swal('Platzi', 'Lo siento, perdiste :(', 'error')
             .then((event) => {
                 console.log(event)
@@ -136,7 +153,7 @@ class Juego {
             if (this.subnivel === this.nivel) {
                 this.nivel++
                 this.eliminarEventosClick()
-                if (this.nivel == (ULTIMO_NIVEL + 1)) {
+                if (this.nivel == (this.ultimo_nivel + 1)) {
                     // Ganó
                     this.ganoElJuego();
                     winEffect.play();
@@ -147,8 +164,6 @@ class Juego {
         } else {
             // Perdió
             this.perdioElJuego();
-            loseEffect.play();
-            gameMusic.pause();
         }
     }
 }
@@ -157,6 +172,10 @@ class Juego {
 function empezarJuego() {
     let juego = new Juego();
     window.juego =  juego;
+}
+
+function controlAudio() {
+    gameMusic.muted ? gameMusic.muted = false : gameMusic.muted = true;
 }
 
 function music(action) {

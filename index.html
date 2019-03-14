@@ -1,104 +1,120 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title>Simon Dice</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+        crossorigin="anonymous">
     <style>
-      body {
-        margin: 0;
-        background: #dedede;
-        
-      }
+        body {
+            margin: 0;
+            background: #dedede;
 
-      .gameboard {
-        height: 100vh;
-        width: 100vh;
-        border-radius: 50%;
-        overflow: hidden;
-        margin: 0 auto;
-        max-height: 60vh;
-        max-width: 60vh;
-      }
+        }
 
-      .color {
-        width: 50%;
-        height: 50%;
-        display: inline-block;
-      }
+        .gameboard {
+            height: 100vh;
+            width: 100vh;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto;
+            max-height: 60vh;
+            max-width: 60vh;
+        }
 
-      .left {
-        float: left;
-      }
+        .color {
+            width: 50%;
+            height: 50%;
+            display: inline-block;
+        }
 
-      .right {
-        float: left;
-      }
+        .left {
+            float: left;
+        }
 
-      .celeste {
-        background: #22a6b3;
-      }
+        .right {
+            float: left;
+        }
 
-      .celeste.light {
-        background: #7ed6df;
-      }
+        .celeste {
+            background: #22a6b3;
+        }
 
-      .violeta {
-        background: #be2edd;
-      }
+        .celeste.light {
+            background: #7ed6df;
+        }
 
-      .violeta.light {
-        background: #e056fd;
-      }
+        .violeta {
+            background: #be2edd;
+        }
 
-      .naranja {
-        background: #f0932b;
-      }
+        .violeta.light {
+            background: #e056fd;
+        }
 
-      .naranja.light {
-        background: #ffbe76;
-      }
+        .naranja {
+            background: #f0932b;
+        }
 
-      .verde {
-        background: #6ab04c;
-      }
+        .naranja.light {
+            background: #ffbe76;
+        }
 
-      .verde.light {
-        background: #badc58;
-      }
+        .verde {
+            background: #6ab04c;
+        }
 
-      .btn-start {
-        width: 400px;
-        height: 100px;
-        background: #ecf0f1;
-        color: #2c3e50;
-        font-size: 2.5rem;
-        position: absolute;
-        top: calc(50% - 50px);
-        left: calc(50% - 200px);
-      }
+        .verde.light {
+            background: #badc58;
+        }
 
-      .hide {
-        display: none;
-      }
-      *{
-          font-family: arial;
-      }
+        .btn-start {
+            width: 400px;
+            height: 100px;
+            background: #ecf0f1;
+            color: #2c3e50;
+            font-size: 2.5rem;
+            position: absolute;
+            top: calc(50% - 50px);
+            left: calc(50% - 200px);
+        }
+
+        .hide {
+            display: none;
+        }
+
+        * {
+            font-family: arial;
+        }
+        nav a{
+            color:#6ab04c !important;
+        }
     </style>
-  </head>
-  <body onload="music('play')">
+</head>
+
+<body onload="music('play')">
     <div class="navbar navbar-dark bg-dark shadow-sm">
         <div class="container d-flex justify-content-between">
             <a href="#" class="navbar-brand d-flex align-items-center">
                 <strong>Simón Dice</strong>
             </a>
+            <nav class="nav nav-masthead justify-content-center">
+                <a class="nav-link active" href="#" id="control-music" onclick="controlAudio()">
+                    <i class="fas fa-volume-off fa-2x"></i>
+                </a>
+                <a class="nav-link" href="https://github.com/luisangeldev/simon-dice-platzi" target="_blank">
+                    <i class="fab fa-github fa-2x"></i>
+                </a>
+            </nav>
         </div>
     </div>
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
-                
+
             </div>
         </div>
         <div class="row mt-5">
@@ -113,12 +129,14 @@
             </div>
         </div>
     </div>
-    <audio volume="0.5" id="game-music" src="sounds/Bit-Quest.mp3" preload="auto" controls="none" style="display: none;"></audio>
+    <audio volume="0.5" id="game-music" src="sounds/Bit-Quest.mp3" preload="auto" controls="none" style="display: none;"
+        loop></audio>
     <audio volume="0.5" id="pointer-effect" src="sounds/pointer.wav" preload="auto" controls="none" style="display: none;"></audio>
     <audio volume="0.5" id="start-effect" src="sounds/start.ogg" preload="auto" controls="none" style="display: none;"></audio>
     <audio volume="0.5" id="lose-effect" src="sounds/lose.wav" preload="auto" controls="none" style="display: none;"></audio>
     <audio volume="0.5" id="win-effect" src="sounds/win.mp3" preload="auto" controls="none" style="display: none;"></audio>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script src="simon-dice.js"></script>
-  </body>
+</body>
+
 </html>

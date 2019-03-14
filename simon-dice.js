@@ -94,6 +94,20 @@ class Juego {
         }
     }
 
+    ganoElJuego() {
+        swal('Platzi', 'Felicitaciones ¡Ganaste!','success')
+        .then(() => {
+            this.inicializar();
+        })
+    }
+
+    perdioElJuego() {
+        swal('Platzi', 'Lo siento, perdiste :(', 'error')
+            .then(() => {
+                this.eliminarEventosClick();
+            })
+    }
+
     elegirColor(ev) {
         const nombreColor = ev.target.dataset.color;
         const numeroColor = this.colorANumero(nombreColor);
@@ -105,12 +119,14 @@ class Juego {
                 this.eliminarEventosClick()
                 if (this.nivel == (ULTIMO_NIVEL + 1)) {
                     // Ganó
+                    this.ganoElJuego();
                 } else {
                     setTimeout(() => this.siguienteNivel(), 2000);
                 }
             }
         } else {
             // Perdió
+            this.perdioElJuego();
         }
     }
 }

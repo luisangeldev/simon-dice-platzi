@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8">
     <title>Simon Dice</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
       body {
         margin: 0;
         background: #dedede;
-        display: flex;
-        align-items: center;
-        height: 100vh;
+        
       }
 
       .gameboard {
@@ -88,16 +88,36 @@
     </style>
   </head>
   <body onload="music('play')">
-    <div class="gameboard">
-      <div id="celeste" class="color celeste left" data-color="celeste"></div>
-      <div id="violeta" class="color violeta right" data-color="violeta"></div>
-      <div id="naranja" class="color naranja left" data-color="naranja"></div>
-      <div id="verde" class="color verde right" data-color="verde"></div>
-      <button id="btnEmpezar" class="btn-start" onclick="empezarJuego()">Empezar a jugar!</button>
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container d-flex justify-content-between">
+            <a href="#" class="navbar-brand d-flex align-items-center">
+                <strong>Simón Dice</strong>
+            </a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <div class="gameboard">
+                    <div id="celeste" class="color celeste left" data-color="celeste"></div>
+                    <div id="violeta" class="color violeta right" data-color="violeta"></div>
+                    <div id="naranja" class="color naranja left" data-color="naranja"></div>
+                    <div id="verde" class="color verde right" data-color="verde"></div>
+                    <button id="btnEmpezar" class="btn-start" onclick="empezarJuego()">Empezar a jugar!</button>
+                </div>
+            </div>
+        </div>
     </div>
     <audio volume="0.5" id="game-music" src="sounds/Bit-Quest.mp3" preload="auto" controls="none" style="display: none;"></audio>
     <audio volume="0.5" id="pointer-effect" src="sounds/pointer.wav" preload="auto" controls="none" style="display: none;"></audio>
     <audio volume="0.5" id="start-effect" src="sounds/start.ogg" preload="auto" controls="none" style="display: none;"></audio>
+    <audio volume="0.5" id="lose-effect" src="sounds/lose.wav" preload="auto" controls="none" style="display: none;"></audio>
+    <audio volume="0.5" id="win-effect" src="sounds/win.mp3" preload="auto" controls="none" style="display: none;"></audio>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script src="simon-dice.js"></script>
   </body>

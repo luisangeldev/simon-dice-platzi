@@ -3,9 +3,12 @@ const celeste = document.getElementById('celeste');
 const violeta = document.getElementById('violeta');
 const naranja = document.getElementById('naranja');
 const verde = document.getElementById('verde');
+const gameMusic = document.getElementById('game-music');
 const startEffect = document.getElementById('start-effect');
 const pointerEffect = document.getElementById('pointer-effect');
-const ULTIMO_NIVEL = 10;
+const loseEffect = document.getElementById('lose-effect');
+const winEffect = document.getElementById('win-effect');
+const ULTIMO_NIVEL = 2;
 
 class Juego {
     constructor() {
@@ -25,6 +28,15 @@ class Juego {
             violeta,
             naranja,
             verde
+        }
+    }
+
+    // ReStart
+    restart() {
+        this.eliminarEventosClick();
+        btnEmpezar.classList.remove('hide');
+        if (gameMusic.paused) {
+            gameMusic.play();
         }
     }
 
@@ -99,16 +111,18 @@ class Juego {
     }
 
     ganoElJuego() {
+        gameMusic.pause();
         swal('Platzi', 'Felicitaciones ¡Ganaste!','success')
-        .then(() => {
-            this.inicializar();
+        .then((event) => {
+            this.restart();
         })
     }
 
     perdioElJuego() {
         swal('Platzi', 'Lo siento, perdiste :(', 'error')
-            .then(() => {
-                this.eliminarEventosClick();
+            .then((event) => {
+                console.log(event)
+                this.restart();
             })
     }
 
@@ -125,6 +139,7 @@ class Juego {
                 if (this.nivel == (ULTIMO_NIVEL + 1)) {
                     // Ganó
                     this.ganoElJuego();
+                    winEffect.play();
                 } else {
                     setTimeout(() => this.siguienteNivel(), 2000);
                 }
@@ -132,6 +147,8 @@ class Juego {
         } else {
             // Perdió
             this.perdioElJuego();
+            loseEffect.play();
+            gameMusic.pause();
         }
     }
 }
@@ -143,13 +160,12 @@ function empezarJuego() {
 }
 
 function music(action) {
-    let music = document.getElementById('game-music');
     switch (action) {
         case 'play':
-            music.play();
+            gameMusic.play();
             break;
         case 'stop':
-            music.pause();
+            gameMusic.pause();
             break;
     }
 }

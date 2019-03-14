@@ -3,6 +3,8 @@ const celeste = document.getElementById('celeste');
 const violeta = document.getElementById('violeta');
 const naranja = document.getElementById('naranja');
 const verde = document.getElementById('verde');
+const startEffect = document.getElementById('start-effect');
+const pointerEffect = document.getElementById('pointer-effect');
 const ULTIMO_NIVEL = 10;
 
 class Juego {
@@ -13,6 +15,7 @@ class Juego {
     }
 
     inicializar() {
+        startEffect.play();
         this.elegirColor = this.elegirColor.bind(this);
         this.siguienteNivel = this.siguienteNivel.bind(this);
         btnEmpezar.classList.add('hide');
@@ -81,6 +84,7 @@ class Juego {
 
     iluminarColor(color) {
         this.colores[color].classList.add('light');
+        pointerEffect.play();
         setTimeout(() => this.apagarColor(color), 350);
     }
 
@@ -109,6 +113,7 @@ class Juego {
     }
 
     elegirColor(ev) {
+        pointerEffect.play();
         const nombreColor = ev.target.dataset.color;
         const numeroColor = this.colorANumero(nombreColor);
         this.iluminarColor(nombreColor);
@@ -135,4 +140,16 @@ class Juego {
 function empezarJuego() {
     let juego = new Juego();
     window.juego =  juego;
+}
+
+function music(action) {
+    let music = document.getElementById('game-music');
+    switch (action) {
+        case 'play':
+            music.play();
+            break;
+        case 'stop':
+            music.pause();
+            break;
+    }
 }
